@@ -1,27 +1,22 @@
-const qrcode = require("qrcode-terminal");
-const { Client } = require("whatsapp-web.js");
-const client = new Client();
+const wa = require("@open-wa/wa-automate");
 
-client.on("qr", (qr) => {
-  qrcode.generate(qr, { small: true });
-});
+wa.create().then((client) => start(client));
 
-client.on("ready", () => {
-  console.log("Client is ready!");
-});
-
-client.on("message", (msg) => {
-  if (msg.body == "!todo") {
-    msg.reply("Good Luck for your todo");
-  } else if (msg.body == "!Hai") {
-    msg.reply("Hello");
-  } else if (msg.body == "!Way") {
-    msg.reply("Apa?");
-  } else if (msg.body == "!P") {
-    msg.reply("q");
-  } else {
-    msg.reply("hello");
-  }
-});
-
-client.initialize();
+function start(client) {
+  client.onMessage(async (message) => {
+    console.log(message);
+    const [a, b, c, d, e, ...rest] = message.body.split("");
+    const sender = message.sender.pushname;
+    const key = a + b + c + d + e;
+    if (key === "#todo") {
+      const messageNew = {
+        body: rest.join("").trim(),
+        timestamp: message.t,
+        sender,
+        chatid: message.chatid,
+        imgProfil: message.sender.profilePicThumbObj.img,
+      };
+      await client.sendText(message.from, `🔥 Semangat 🔥 @${sender}`);
+    }
+  });
+}
