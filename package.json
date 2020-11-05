@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "@open-wa/wa-automate": "^3.0.13",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.12",
     "qrcode-terminal": "^0.12.0"
   }
 }
